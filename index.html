@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ATL Portal — Home</title>
+<style>
+  body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background: linear-gradient(135deg, #00eaff55, #7a00ff55, #00ffaa55);
+    backdrop-filter: blur(4px);
+    color:#fff;
+    overflow:hidden;
+  }
+
+  @keyframes float{
+    0%{transform:translateY(0)}
+    50%{transform:translateY(-12px)}
+    100%{transform:translateY(0)}
+  }
+
+  @keyframes fadeIn{
+    from{opacity:0;transform:scale(.95)}
+    to{opacity:1;transform:scale(1)}
+  }
+
+  .glow{ text-shadow:0 0 12px cyan,0 0 20px cyan; }
+
+  .page-select{
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    animation:fadeIn 1s ease;
+  }
+
+  h1{
+    font-size:36px;
+    letter-spacing:2px;
+    animation:float 4s ease-in-out infinite;
+  }
+
+  .btn{
+    padding:16px 24px;
+    background:linear-gradient(90deg,#00eaff,#00ffaa);
+    color:#000;
+    border-radius:14px;
+    text-decoration:none;
+    font-weight:bold;
+    width:220px;
+    text-align:center;
+    font-size:18px;
+    transition:.3s;
+    animation:fadeIn .8s ease;
+  }
+
+  .btn:hover{
+    transform:scale(1.08);
+    box-shadow:0 0 20px #00faff,0 0 40px #00ffaa;
+  }
+</style>
+</head>
+<body>
+<div class="page-select">
+  <h1>Choose Your Section</h1>
+  <a class="btn" href="atal.html">ATAL</a>
+  <a class="btn" href="physics.html">Physics</a>
+  <a class="btn" href="astronomy.html">Astronomy</a>
+</div>
+
+<!-- Built‑in WebAudio hover sound -->
+<script>
+let ctxAudio = new (window.AudioContext||window.webkitAudioContext)();
+function playBeep(){
+  let osc = ctxAudio.createOscillator();
+  let gain = ctxAudio.createGain();
+  osc.connect(gain); gain.connect(ctxAudio.destination);
+  osc.type = "sine";
+  osc.frequency.value = 700;
+  gain.gain.setValueAtTime(0.15, ctxAudio.currentTime);
+  osc.start();
+  osc.stop(ctxAudio.currentTime+0.1);
+}
+</script>
+
+<script>
+// Play built‑in sound on button hover
+
+document.querySelectorAll('.btn').forEach(btn=>{
+  btn.addEventListener('mouseenter',()=>{
+    playBeep();
+  });
+});
+</script>
+
+<!-- Starfield Background Canvas -->
+<canvas id="stars" style="position:fixed;inset:0;z-index:-1;pointer-events:none"></canvas>
+
+<!-- Page Transition Loader -->
+<div id="loader" style="position:fixed;inset:0;background:#000;display:flex;justify-content:center;align-items:center;z-index:50;opacity:0;pointer-events:none;transition:.6s">
+  <div style="width:60px;height:60px;border:6px solid #00ffee;border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite"></div>
+</div>
+
+<script>
+/* -------- Star Animation -------- */
+const starCanvas = document.getElementById('stars');
+const ctx = starCanvas.getContext('2d');
+let w = starCanvas.width = innerWidth;
+let h = starCanvas.height = innerHeight;
+let stars = [];
+
+function initStars(){
+  stars = [];
+  for(let i=0;i<250;i++){
+    stars.push({x:Math.random()*w,y:Math.random()*h,z:Math.random()*3+1});
+  }
+}
+
+function animateStars(){
+  ctx.clearRect(0,0,w,h);
+  for(let s of stars){
+    ctx.fillStyle = 'rgba(255,255,255,'+(s.z/4)+')';
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.z,0,Math.PI*2);
+    ctx.fill();
+    s.y += s.z*0.6;
+    if(s.y > h){ s.y = 0; s.x = Math.random()*w; }
+  }
+  requestAnimationFrame(animateStars);
+}
+
+window.addEventListener('resize',()=>{
+  w = starCanvas.width = innerWidth;
+  h = starCanvas.height = innerHeight;
+  initStars();
+});
+initStars();
+animateStars();
+
+/* -------- Page Transition Animation -------- */
+const loader = document.getElementById('loader');
+document.querySelectorAll('.btn').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    e.preventDefault();
+    loader.style.opacity = 1;
+    loader.style.pointerEvents = 'auto';
+    setTimeout(()=>{ window.location.href = btn.href; },700);
+  });
+});
+
+/* -------- Add icons inside buttons -------- */
+document.querySelectorAll('.btn').forEach(btn=>{
+  btn.innerHTML = '⭐ ' + btn.innerHTML;
+});
+</script>
+
+</body>
+</html>
