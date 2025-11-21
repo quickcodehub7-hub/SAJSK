@@ -5,6 +5,31 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>ATAL — Innovation Studio</title>
 <style>
+  .slider-container{
+  overflow:hidden;
+  border-radius:14px;
+  margin-top:20px;
+  border:1px solid rgba(255,255,255,0.08);
+}
+
+.slider-track{
+  display:flex;
+  gap:10px;
+  animation: slide 60s linear infinite;
+}
+
+.slider-track img{
+  width:250px;
+  height:160px;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+@keyframes slide{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+
   body{
     margin:0;
     font-family:Arial, sans-serif;
@@ -277,6 +302,27 @@ function toggleMenu(){
 </section>
 
 <a class="back" href="index.html">← Back to Home</a>
+  <script>
+// Example: dynamically load 200 images named 1.jpg, 2.jpg,... in folder 'images/gallery/'
+const totalImages = 200; 
+const folderPath = "images/gallery/"; // your folder
+const sliderTrack = document.getElementById("sliderTrack");
+
+// Load images
+for(let i=1;i<=totalImages;i++){
+  let img = document.createElement("img");
+  img.src = `${folderPath}${i}.jpg`;
+  sliderTrack.appendChild(img);
+}
+
+// Duplicate images for seamless sliding
+for(let i=1;i<=totalImages;i++){
+  let img = document.createElement("img");
+  img.src = `${folderPath}${i}.jpg`;
+  sliderTrack.appendChild(img);
+}
+</script>
+
 
 </body>
 </html>
