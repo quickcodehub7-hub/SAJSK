@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Physics Lab</title>
+<style>
+  body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#0f1115 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" fill="%23ffffff11"><text x="10" y="40" font-size="28">E=mc^2</text><text x="20" y="120" font-size="26">F=ma</text><text x="60" y="180" font-size="24">λ = v/f</text></svg>') repeat; ;
+    color:#fff;
+    overflow-x:hidden;
+  }
+
+  /* NAVBAR */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 20px;
+    background:#0f1115dd;
+    backdrop-filter:blur(6px);
+    position:sticky;
+    top:0;
+    z-index:10;
+  }
+
+  .logo{
+    width:50px;height:50px;
+    background:#1a1f24;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    font-weight:bold;
+    color:#00eaff;
+  }
+
+  nav a{
+    color:#fff;
+    text-decoration:none;
+    padding:10px 14px;
+    background:#1a1f24;
+    border-radius:10px;
+    border:1px solid #ffffff22;
+    margin-left:12px;
+  }
+
+  /* MOBILE */
+  .hamburger{display:none;cursor:pointer;flex-direction:column;gap:4px;}
+  .hamburger div{width:24px;height:3px;background:#fff;border-radius:2px;}
+  #mobileNav{display:none;flex-direction:column;gap:12px;background:#0f1115;padding:20px;}
+
+  @media(max-width:700px){
+    .desktop-nav{display:none;} .hamburger{display:flex;}
+  }
+
+  /* Sections */
+  .section{
+    padding:20px;
+    max-width:1100px;
+    margin:auto;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;
+  }
+
+  .card{
+    background:#1a1f24;
+    padding:14px;
+    border-radius:14px;
+    border:1px solid #ffffff22;
+    transition:.3s;
+  }
+  .card:hover{transform:scale(1.04);}
+
+  .card img, .card video{
+    width:100%;height:160px;object-fit:cover;border-radius:10px;margin-bottom:10px;
+  }
+
+  
+  .c1{top:10%;left:10%;} .c2{top:60%;left:70%;} .c3{top:40%;left:30%;}
+
+  @keyframes float{
+    0%{transform:translateY(0) scale(1)}
+    50%{transform:translateY(-40px) scale(1.1)}
+    100%{transform:translateY(0) scale(1)}
+  }
+
+  /* Particles */
+  .particle{
+    position:fixed;width:6px;height:6px;border-radius:50%;background:#ffffff22;
+    animation: drift 10s linear infinite;z-index:-2;
+  }
+  @keyframes drift{
+    from{transform:translateY(0);opacity:0.5}
+    to{transform:translateY(-120vh);opacity:0}
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+<header>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="logo">Φ</div>
+    <h2 style="margin:0;">Physics Lab</h2>
+  </div>
+
+  <nav class="desktop-nav">
+    <a href="index.html">Home</a>
+    <a href="atal.html">ATL</a>
+    <a href="physics.html">Physics</a>
+    <a href="astronomy.html">Astronomy</a>
+  </nav>
+
+  <div class="hamburger" onclick="toggleMenu()">
+    <div></div><div></div><div></div>
+  </div>
+</header>
+
+<!-- 3‑dot Quick Menu -->
+<div style="position:fixed;top:80px;right:20px;z-index:12;">
+  <div onclick="toggleQuickMenu()" style="width:28px;height:28px;display:flex;flex-direction:column;justify-content:center;gap:4px;cursor:pointer;">
+    <div style="width:6px;height:6px;background:white;border-radius:50%;margin:auto;"></div>
+    <div style="width:6px;height:6px;background:white;border-radius:50%;margin:auto;"></div>
+    <div style="width:6px;height:6px;background:white;border-radius:50%;margin:auto;"></div>
+  </div>
+</div>
+
+<div id="quickMenu" style="display:none;position:fixed;top:120px;right:20px;background:#1a1f24;padding:14px;border-radius:10px;border:1px solid #ffffff33;z-index:13;">
+  <a href="#about" style="color:white;text-decoration:none;display:block;padding:6px 0;">About Us</a>
+  <a href="#mentors" style="color:white;text-decoration:none;display:block;padding:6px 0;">Mentors</a>
+  <a href="#achievements" style="color:white;text-decoration:none;display:block;padding:6px 0;">Achievements</a>
+</div>
+<script>
+function toggleQuickMenu(){
+  let q=document.getElementById('quickMenu');
+  q.style.display = q.style.display==='block'?'none':'block';
+}
+</script>
+
+<div id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="atal.html">ATL</a>
+  <a href="physics.html">Physics</a>
+  <a href="astronomy.html">Astronomy</a>
+</div>
+
+<script>
+function toggleMenu(){
+  const nav=document.getElementById('mobileNav');
+  nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+}
+</script>
+
+<!-- ===================== CONTENT ===================== -->
+
+<section class="section" id="about">
+  <h2>About Us</h2>
+  <p>
+    The Physics Lab is dedicated to exploring the wonders of science through experiments,
+    simulations, and hands‑on learning. Our mission is to inspire curiosity and build
+    strong scientific understanding among students.
+  </p>
+</section>
+
+<section class="section">
+  <h2>Physics Simulations</h2>
+  <p>Interactive experiments and demos.</p>
+  <div class="grid">
+    <div class="card">
+      <img src="https://i.imgur.com/i6X2e4W.png" />
+      <h3>Pendulum Simulation</h3>
+      <p>Animated pendulum showing frequency change.</p>
+    </div>
+    <div class="card">
+      <img src="https://i.imgur.com/KMFgkXj.png" />
+      <h3>Projectile Motion</h3>
+      <p>Trajectory arc and velocity indicator.</p>
+    </div>
+    <div class="card">
+      <img src="https://i.imgur.com/lWYJ7XI.png" />
+      <h3>Electric Field Line Demo</h3>
+      <p>Field patterns of different charge setups.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="mentors">
+  <h2>Mentors' Corner</h2>
+  <p>Meet our physics mentors and guides.</p>
+  <div class="grid">
+    <div class="card">
+      <img src="" alt="mentor image" />
+      <h3>Dr. A.K. Sharma</h3>
+      <p>Specialist in Mechanics & Thermodynamics.</p>
+    </div>
+    <div class="card">
+      <img src="" alt="mentor image" />
+      <h3>Ms. Priya Verma</h3>
+      <p>Expert in Electricity & Magnetism.</p>
+    </div>
+    <div class="card">
+      <img src="" alt="mentor image" />
+      <h3>Mr. R. Gupta</h3>
+      <p>Focus on Optics & Modern Physics.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="achievements">
+  <h2>Achievements</h2>
+  <p>Physics department milestones and successes.</p>
+  <div class="grid">
+    <div class="card">
+      <img src="" alt="achievement image" />
+      <h3>2020 — State Level Science Fair</h3>
+      <p>Students won 1st prize in physics model presentation.</p>
+    </div>
+    <div class="card">
+      <img src="" alt="achievement image" />
+      <h3>2022 — National Physics Olympiad</h3>
+      <p>Qualified for national round with excellent scores.</p>
+    </div>
+    <div class="card">
+      <img src="" alt="achievement image" />
+      <h3>2023 — Innovation Challenge</h3>
+      <p>Presented award‑winning energy conservation project.</p>
+    </div>
+  </div>
+</section>
+
+<footer style="text-align:center;padding:20px;color:#bfc7d6;margin-top:40px;">Made with ❤️ by Jai</footer>
+
+
+
+</body>
+</html>

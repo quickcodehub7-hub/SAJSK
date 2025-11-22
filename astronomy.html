@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Astronomy Club</title>
+<style>
+  body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#000;
+    color:#fff;
+    overflow-x:hidden; /* allow scrolling */
+  }
+
+  /* STAR BACKGROUND CANVAS */
+  canvas#stars{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+  }
+
+  /* NAVBAR */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 20px;
+    background:#000000aa;
+    backdrop-filter:blur(6px);
+    position:sticky;
+    top:0;
+    z-index:10;
+  }
+
+  .logo{
+    width:50px;height:50px;
+    background:#111;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    font-weight:bold;
+    color:#00d0ff;
+  }
+
+  nav a{
+    color:#fff;
+    text-decoration:none;
+    padding:10px 14px;
+    background:#111;
+    border-radius:10px;
+    border:1px solid #ffffff22;
+    margin-left:12px;
+  }
+
+  .hamburger{display:none;cursor:pointer;flex-direction:column;gap:4px;}
+  .hamburger div{width:24px;height:3px;background:#fff;border-radius:2px;}
+  #mobileNav{display:none;position:absolute;top:70px;right:20px;flex-direction:column;gap:12px;background:#000;padding:20px;width:160px;border-radius:10px;border:1px solid #ffffff33;}
+
+  @media(max-width:700px){
+    .desktop-nav{display:none;} .hamburger{display:flex;}
+  }
+
+  .section{
+    padding:20px;
+    max-width:1100px;
+    margin:auto;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;
+  }
+
+  .card{
+    background:#111;
+    padding:14px;
+    border-radius:14px;
+    border:1px solid #ffffff22;
+    transition:.3s;
+  }
+  .card:hover{transform:scale(1.04);} 
+  .card img{
+    width:100%;height:160px;object-fit:cover;border-radius:10px;margin-bottom:10px;
+  }
+
+.dots-menu{cursor:pointer;display:flex;flex-direction:column;gap:4px;position:absolute;right:20px;top:22px;}
+.dots-menu div{width:6px;height:6px;background:white;border-radius:50%;}
+.quick-menu{display:none;position:absolute;top:70px;right:20px;background:#111;padding:14px;border-radius:10px;border:1px solid #ffffff33;z-index:30;}
+.quick-menu a{color:white;text-decoration:none;display:block;padding:8px 0;}
+@media(max-width:700px){
+  header{flex-wrap:wrap;gap:10px;}
+  h2{font-size:20px;}
+  .dots-menu{top:18px;right:14px;}
+  #mobileNav a{padding:10px;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="stars" style="pointer-events:none;"></canvas>
+<script>
+// STARFIELD ANIMATION
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+let w = canvas.width = innerWidth;
+let h = canvas.height = innerHeight;
+let stars = [];
+
+function initStars(){
+  stars = [];
+  for(let i=0;i<300;i++){
+    stars.push({x:Math.random()*w, y:Math.random()*h, s:Math.random()*2});
+  }
+}
+
+function animateStars(){
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle = "white";
+  for(let s of stars){
+    ctx.globalAlpha = 0.3 + Math.random()*0.7;
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.s,0,Math.PI*2);
+    ctx.fill();
+    s.y += s.s*0.2;
+    if(s.y > h){ s.y = 0; s.x = Math.random()*w; }
+  }
+  requestAnimationFrame(animateStars);
+}
+
+window.addEventListener('resize',()=>{
+  w = canvas.width = innerWidth;
+  h = canvas.height = innerHeight;
+  initStars();
+});
+
+initStars();
+animateStars();
+</script>
+
+<header>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="logo">★</div>
+    <h2 style="margin:0;">Astronomy Club</h2>
+  </div>
+
+  <nav class="desktop-nav">
+    <a href="index.html">Home</a>
+    <a href="atal.html">ATL</a>
+    <a href="physics.html">Physics</a>
+    <a href="astronomy.html">Astronomy</a>
+  </nav>
+
+  <div class="hamburger" onclick="toggleMenu()">
+    <div></div><div></div><div></div>
+  </div>
+  <div id="dots" style="cursor:pointer;display:flex;flex-direction:column;gap:4px;position:absolute;right:20px;top:22px;">
+    <div style="width:6px;height:6px;background:white;border-radius:50%;"></div>
+    <div style="width:6px;height:6px;background:white;border-radius:50%;"></div>
+    <div style="width:6px;height:6px;background:white;border-radius:50%;"></div>
+  </div>
+  <div id="dots" class="dots-menu">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</header>
+
+<div id="quickMenu" class="quick-menu">
+  <a href="#about">About Us</a>
+  <a href="#mentors">Mentors</a>
+  <a href="#achievements">Achievements</a>
+</div>
+<script>
+document.getElementById('dots').onclick = function(){
+  let q=document.getElementById('quickMenu');
+  q.style.display = q.style.display==='block'?'none':'block';
+}
+</script>
+
+
+
+
+
+<div id="quickMenu" style="display:none; position:absolute; top:70px; right:20px; background:#111; padding:14px; border-radius:10px; border:1px solid #ffffff33; z-index:30;">
+  <a href="#about" style="color:white; text-decoration:none; display:block; padding:6px 0;">About Us</a>
+  <a href="#mentors" style="color:white; text-decoration:none; display:block; padding:6px 0;">Mentors</a>
+  <a href="#achievements" style="color:white; text-decoration:none; display:block; padding:6px 0;">Achievements</a>
+</div>
+<script>
+function toggleQuickMenu(){
+  let q=document.getElementById('quickMenu');
+  q.style.display = q.style.display==='block'?'none':'block';
+}
+</script>
+
+<div id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="atal.html">ATL</a>
+  <a href="physics.html">Physics</a>
+  <a href="astronomy.html">Astronomy</a>
+</div>
+
+<script>
+function toggleMenu(){
+  const nav=document.getElementById('mobileNav');
+  nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+}
+</script>
+
+<section class="section">
+  <h2>About Astronomy Club</h2>
+  <p>The Astronomy Club explores the universe through observation, telescopes, projects, and discovery.</p>
+</section>
+
+<section class="section" id="mentors">
+  <h2>Mentors' Corner</h2>
+  <p>Meet the astronomy mentors guiding students in space exploration.</p>
+  <div class="grid">
+    <div class="card"><img src="https://via.placeholder.com/300x160?text=Mentor" /><h3>Dr. Riya Sen</h3><p>Astrophysics expert.</p></div>
+    <div class="card"><img src="https://via.placeholder.com/300x160?text=Mentor" /><h3>Mr. Arjun Mehta</h3><p>Telescope & observation specialist.</p></div>
+    <div class="card"><img src="https://via.placeholder.com/300x160?text=Mentor" /><h3>Ms. Kavita Rao</h3><p>Space science educator.</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Space Gallery</h2>
+  <div class="grid">
+    <div class="card"><img src="https://via.placeholder.com/300x160?text=Space+Image" alt="Space Image" /><h3>Galaxy</h3></div>
+    <div class="card"><img src="https://via.placeholder.com/300x160?text=Space+Image" alt="Space Image" /><h3>Nebula</h3></div>
+    <div class="card"><img src="https://via.placeholder.com/300x160?text=Space+Image" alt="Space Image" /><h3>Star Cluster</h3></div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Achievements</h2>
+  <div class="grid">
+    <div class="card"><img src="https://via.placeholder.com/300x160?text=Space+Image" /><h3>2021 — Telescope Setup</h3></div>
+    <div class="card"><img src="https://via.placeholder.com/300x160?text=Space+Image" /><h3>2022 — Night Sky Observation</h3></div>
+    <div class="card"><img src="https://via.placeholder.com/300x160?text=Space+Image" /><h3>2023 — Space Science Fair</h3></div>
+  </div>
+</section>
+
+<footer style="text-align:center;padding:20px;color:#bfc7d6;margin-top:40px;">Made with ❤️ by Jai</footer>
+
+</body>
+</html>
