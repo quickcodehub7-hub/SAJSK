@@ -3,61 +3,69 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Physics Lab</title>
+<title>PHYSICS CLUB</title>
 <style>
+ .slider-container {
+  overflow-x: hidden;
+  margin-top: 20px;
+}
+
+..slider-track {
+  animation: slide 15s linear infinite; /* faster */
+}
+
+.slider-track .card {
+  min-width: 260px;
+  flex-shrink: 0;
+}
+
+.slider-track {
+  display: flex;
+  gap: 16px;
+  flex-wrap: nowrap;       /* important: no wrapping */
+  width: max-content;      /* fit all cards */
+  animation: slide 40s linear infinite; /* adjust speed */
+}
+
+
+@keyframes slide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* works because we duplicated the cards */
+}
+
+
+
   body{
     margin:0;
     font-family:Arial, sans-serif;
-    background:#0f1115 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" fill="%23ffffff11"><text x="10" y="40" font-size="28">E=mc^2</text><text x="20" y="120" font-size="26">F=ma</text><text x="60" y="180" font-size="24">λ = v/f</text></svg>') repeat; ;
+    background:#0f1115; /* clean dark */
     color:#fff;
+    min-height:100vh;
     overflow-x:hidden;
   }
 
-  /* NAVBAR */
   header{
+    padding:20px;
     display:flex;
     align-items:center;
-    justify-content:space-between;
-    padding:16px 20px;
-    background:#0f1115dd;
-    backdrop-filter:blur(6px);
-    position:sticky;
-    top:0;
-    z-index:10;
+    gap:12px;
   }
 
   .logo{
-    width:50px;height:50px;
-    background:#1a1f24;
+    width:56px;height:56px;
     border-radius:12px;
+    background:linear-gradient(90deg,#7a00ff,#00eaff);
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:22px;
-    font-weight:bold;
-    color:#00eaff;
+    font-weight:800;
+    color:#05060a;
+    font-size:20px;
   }
 
-  nav a{
-    color:#fff;
-    text-decoration:none;
-    padding:10px 14px;
-    background:#1a1f24;
-    border-radius:10px;
-    border:1px solid #ffffff22;
-    margin-left:12px;
-  }
+  h1{margin:0;font-size:26px;}
+  p{color:#bfc7d6;}
 
-  /* MOBILE */
-  .hamburger{display:none;cursor:pointer;flex-direction:column;gap:4px;}
-  .hamburger div{width:24px;height:3px;background:#fff;border-radius:2px;}
-  #mobileNav{display:none;flex-direction:column;gap:12px;background:#0f1115;padding:20px;}
-
-  @media(max-width:700px){
-    .desktop-nav{display:none;} .hamburger{display:flex;}
-  }
-
-  /* Sections */
   .section{
     padding:20px;
     max-width:1100px;
@@ -71,31 +79,73 @@
   }
 
   .card{
-    background:#1a1f24;
-    padding:14px;
+    background:rgba(255,255,255,0.06);
     border-radius:14px;
-    border:1px solid #ffffff22;
+    padding:14px;
+    backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,0.08);
     transition:.3s;
   }
-  .card:hover{transform:scale(1.04);}
-
+  .card:hover{
+    transform:scale(1.04);
+    box-shadow:0 0 20px #00ffaa66;
+  }
   .card img, .card video{
-    width:100%;height:160px;object-fit:cover;border-radius:10px;margin-bottom:10px;
+    width:100%;height:160px;
+    border-radius:12px;
+    object-fit:cover;
+    margin-bottom:10px;
   }
 
-  
-  .c1{top:10%;left:10%;} .c2{top:60%;left:70%;} .c3{top:40%;left:30%;}
+  .back{
+    position:fixed;
+    left:20px;
+    bottom:20px;
+    padding:12px 18px;
+    background:linear-gradient(90deg,#00eaff,#7a00ff);
+    border-radius:12px;
+    color:#05060a;
+    font-weight:bold;
+    text-decoration:none;
+  }
+
+  /* Animated floating circles */
+  .bg-circle{
+    position:fixed;
+    width:180px;height:180px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.03);
+    filter:blur(12px);
+    animation:float 12s infinite ease-in-out;
+    z-index:-1;
+  }
+  .c1{top:10%;left:10%;animation-delay:0s;}
+  .c2{top:60%;left:70%;animation-delay:3s;}
+  .c3{top:40%;left:30%;animation-delay:6s;}
 
   @keyframes float{
     0%{transform:translateY(0) scale(1)}
     50%{transform:translateY(-40px) scale(1.1)}
     100%{transform:translateY(0) scale(1)}
   }
+  /* Mobile-friendly improvements */
+  @media(max-width:600px){
+    h1{font-size:20px;}
+    .logo{width:46px;height:46px;font-size:16px;}
+    .section{padding:14px;}
+    .grid{grid-template-columns:1fr;} /* Single column */
+    .card img,.card video{height:140px;}
+    header{padding:14px;}
+  }
 
-  /* Particles */
+  /* Soft floating particles */
   .particle{
-    position:fixed;width:6px;height:6px;border-radius:50%;background:#ffffff22;
-    animation: drift 10s linear infinite;z-index:-2;
+    position:fixed;
+    width:6px;height:6px;
+    border-radius:50%;
+    background:#ffffff22;
+    animation: drift 10s linear infinite;
+    z-index:-2;
   }
   @keyframes drift{
     from{transform:translateY(0);opacity:0.5}
@@ -104,55 +154,51 @@
 </style>
 </head>
 <body>
-
-
-
-
-
-<header>
+<!-- Background Particles -->
+<script>
+for(let i=0;i<25;i++){
+  let p=document.createElement('div');
+  p.className='particle';
+  p.style.left=Math.random()*100+'vw';
+  p.style.top=Math.random()*100+'vh';
+  p.style.animationDuration=(6+Math.random()*6)+'s';
+  document.body.appendChild(p);
+}
+</script>
+<div class="bg-circle c1"></div>
+<div class="bg-circle c2"></div>
+<div class="bg-circle c3"></div>
+<header style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;position:sticky;top:0;background:#0f1115bb;backdrop-filter:blur(6px);z-index:10;">
   <div style="display:flex;align-items:center;gap:12px;">
-    <div class="logo">Φ</div>
-    <h2 style="margin:0;">Physics Lab</h2>
+    <div class="logo">PC</div>
+    <div>
+      <h1 style="margin:0;font-size:22px;">PHYSICS CLUB</h1>
+      <p style="margin:0;font-size:12px;color:#bfc7d6;">Projects • Workshops • Creativity</p>
+    </div>
   </div>
 
-  <nav class="desktop-nav">
-    <a href="index.html">Home</a>
-    <a href="atal.html">ATL</a>
-    <a href="physics.html">Physics</a>
-    <a href="astronomy.html">Astronomy</a>
+  <!-- Desktop Nav -->
+  <nav class="desktop-nav" style="display:flex;gap:16px;">
+    <a href="index.html" style="color:#fff;text-decoration:none;padding:10px 14px;border-radius:10px;background:#1a1f24;border:1px solid #ffffff22;">Home</a>
+    <a href="atal.html" style="color:#fff;text-decoration:none;padding:10px 14px;border-radius:10px;background:#1a1f24;border:1px solid #ffffff22;">ATL</a>
+    <a href="physics.html" style="color:#fff;text-decoration:none;padding:10px 14px;border-radius:10px;background:#1a1f24;border:1px solid #ffffff22;">Physics</a>
+    <a href="astronomy.html" style="color:#fff;text-decoration:none;padding:10px 14px;border-radius:10px;background:#1a1f24;border:1px solid #ffffff22;">Astronomy</a>
   </nav>
 
-  <div class="hamburger" onclick="toggleMenu()">
-    <div></div><div></div><div></div>
+  <!-- Mobile Menu Button -->
+  <div class="hamburger" onclick="toggleMenu()" style="display:none;cursor:pointer;flex-direction:column;gap:4px;">
+    <div style="width:24px;height:3px;background:white;border-radius:2px;"></div>
+    <div style="width:24px;height:3px;background:white;border-radius:2px;"></div>
+    <div style="width:24px;height:3px;background:white;border-radius:2px;"></div>
   </div>
 </header>
 
-<!-- 3‑dot Quick Menu -->
-<div style="position:fixed;top:80px;right:20px;z-index:12;">
-  <div onclick="toggleQuickMenu()" style="width:28px;height:28px;display:flex;flex-direction:column;justify-content:center;gap:4px;cursor:pointer;">
-    <div style="width:6px;height:6px;background:white;border-radius:50%;margin:auto;"></div>
-    <div style="width:6px;height:6px;background:white;border-radius:50%;margin:auto;"></div>
-    <div style="width:6px;height:6px;background:white;border-radius:50%;margin:auto;"></div>
-  </div>
-</div>
-
-<div id="quickMenu" style="display:none;position:fixed;top:120px;right:20px;background:#1a1f24;padding:14px;border-radius:10px;border:1px solid #ffffff33;z-index:13;">
-  <a href="#about" style="color:white;text-decoration:none;display:block;padding:6px 0;">About Us</a>
-  <a href="#mentors" style="color:white;text-decoration:none;display:block;padding:6px 0;">Mentors</a>
-  <a href="#achievements" style="color:white;text-decoration:none;display:block;padding:6px 0;">Achievements</a>
-</div>
-<script>
-function toggleQuickMenu(){
-  let q=document.getElementById('quickMenu');
-  q.style.display = q.style.display==='block'?'none':'block';
-}
-</script>
-
-<div id="mobileNav">
-  <a href="index.html">Home</a>
-  <a href="atal.html">ATL</a>
-  <a href="physics.html">Physics</a>
-  <a href="astronomy.html">Astronomy</a>
+<!-- Mobile Nav -->
+<div id="mobileNav" style="display:none;flex-direction:column;gap:12px;background:#0f1115;padding:20px;position:sticky;top:70px;z-index:9;">
+  <a href="index.html" style="color:#fff;text-decoration:none;padding:10px 14px;border-radius:10px;background:#1a1f24;">Home</a>
+  <a href="atal.html" style="color:#fff;text-decoration:none;padding:10px 14px;border-radius:10px;background:#1a1f24;">ATL</a>
+  <a href="physics.html" style="color:#fff;text-decoration:none;padding:10px 14px;border-radius:10px;background:#1a1f24;">Physics</a>
+  <a href="astronomy.html" style="color:#fff;text-decoration:none;padding:10px 14px;border-radius:10px;background:#1a1f24;">Astronomy</a>
 </div>
 
 <script>
@@ -162,86 +208,146 @@ function toggleMenu(){
 }
 </script>
 
-<!-- ===================== CONTENT ===================== -->
-
-<section class="section" id="about">
+<style>
+@media(max-width:700px){
+  .desktop-nav{display:none !important;}
+  .hamburger{display:flex !important;}
+}
+</style>
+ <section class="section" id="about-us">
   <h2>About Us</h2>
-  <p>
-    The Physics Lab is dedicated to exploring the wonders of science through experiments,
-    simulations, and hands‑on learning. Our mission is to inspire curiosity and build
-    strong scientific understanding among students.
-  </p>
-</section>
+  <p>The Physics Lab is dedicated to exploring the wonders of science through experiments, simulations, and hands‑on learning. Our mission is to inspire curiosity and build strong scientific understanding among students.</p>
+<section/>
 
 <section class="section">
-  <h2>Physics Simulations</h2>
-  <p>Interactive experiments and demos.</p>
-  <div class="grid">
-    <div class="card">
-      <img src="https://i.imgur.com/i6X2e4W.png" />
-      <h3>Pendulum Simulation</h3>
-      <p>Animated pendulum showing frequency change.</p>
-    </div>
-    <div class="card">
-      <img src="https://i.imgur.com/KMFgkXj.png" />
-      <h3>Projectile Motion</h3>
-      <p>Trajectory arc and velocity indicator.</p>
-    </div>
-    <div class="card">
-      <img src="https://i.imgur.com/lWYJ7XI.png" />
-      <h3>Electric Field Line Demo</h3>
-      <p>Field patterns of different charge setups.</p>
+  <h2>Featured Projects</h2>
+  <p>Here are some example projects.</p>
+
+  <div class="slider-container">
+    <div class="slider-track">
+      <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/ca.jpeg?raw=true" />
+        
+      </div>
+      <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/WhatsApp%20Image%202025-11-22%20at%2011.31.29%20AM%20(1).jpeg?raw=true" />
+       
+      </div>
+      <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/WhatsApp%20Image%202025-11-22%20at%2011.31.29%20AM.jpeg?raw=true" />
+   
+      </div>
+       <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/WhatsApp%20Image%202025-11-22%20at%2011.31.30%20AM.jpeg?raw=true" />
+      
+      </div>
+      <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/WhatsApp%20Image%202025-11-22%20at%2011.31.31%20AM.jpeg?raw=true" />
+       
+      </div>
+      <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/asdfghjkll;'.jpeg?raw=true" />
+      
+     
+      <!-- Add more cards here -->
     </div>
   </div>
 </section>
 
-<section class="section" id="mentors">
-  <h2>Mentors' Corner</h2>
-  <p>Meet our physics mentors and guides.</p>
-  <div class="grid">
-    <div class="card">
-      <img src="" alt="mentor image" />
-      <h3>Dr. A.K. Sharma</h3>
-      <p>Specialist in Mechanics & Thermodynamics.</p>
-    </div>
-    <div class="card">
-      <img src="" alt="mentor image" />
-      <h3>Ms. Priya Verma</h3>
-      <p>Expert in Electricity & Magnetism.</p>
-    </div>
-    <div class="card">
-      <img src="" alt="mentor image" />
-      <h3>Mr. R. Gupta</h3>
-      <p>Focus on Optics & Modern Physics.</p>
+
+<section class="section">
+  <section class="section">
+  <h2>Gallery</h2>
+
+
+  <div class="slider-container">
+    <div class="slider-track">
+      <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/adf.jpeg?raw=true" />
+      </div>
+      <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/df.jpeg?raw=true" />
+      </div>
+      <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/dsds.jpeg?raw=true" />
+      </div>
+      <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/dv.jpeg?raw=true" />
+      </div>
+      <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/dvff.jpeg?raw=true" />
+      </div>
+      <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/s.jpeg?raw=true" />
+      </div>
+      
+     
+      <!-- Add more images manually as needed -->
     </div>
   </div>
 </section>
 
-<section class="section" id="achievements">
+
+<section class="section">
   <h2>Achievements</h2>
-  <p>Physics department milestones and successes.</p>
-  <div class="grid">
-    <div class="card">
-      <img src="" alt="achievement image" />
-      <h3>2020 — State Level Science Fair</h3>
-      <p>Students won 1st prize in physics model presentation.</p>
-    </div>
-    <div class="card">
-      <img src="" alt="achievement image" />
-      <h3>2022 — National Physics Olympiad</h3>
-      <p>Qualified for national round with excellent scores.</p>
-    </div>
-    <div class="card">
-      <img src="" alt="achievement image" />
-      <h3>2023 — Innovation Challenge</h3>
-      <p>Presented award‑winning energy conservation project.</p>
+  <p>Physics milestones and accomplishments.</p>
+
+  <div class="slider-container">
+    <div class="slider-track">
+      <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/asf.jpeg?raw=true" />
+      </div>
+      <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/fdh.jpeg?raw=true" />
+      </div>
+      <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/qsq.jpeg?raw=true" />
+      </div>
+       <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/sardtyu.jpeg?raw=true" />
+      </div>
+      <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/shjkl;'.jpeg?raw=true" />
+      </div>
+      <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/WhatsApp%20Image%202025-11-21%20at%2010.18.49%20PM.jpeg?raw=true" />
+      </div>
+      <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/WhatsApp%20Image%202025-11-21%20at%2010.19.12%20PM.jpeg?raw=true" />
+      </div>
+      <div class="card">
+        <img src="https://github.com/quickcodehub7-hub/SAJSK/blob/main/ygjm.jpeg?raw=true" />
+      </div>
+       
+      <!-- Add more achievements here -->
     </div>
   </div>
 </section>
 
+
+<a class="back" href="index.html">← Back to Home</a>
+  <script>
+// Example: dynamically load 200 images named 1.jpg, 2.jpg,... in folder 'images/gallery/'
+const totalImages = 200; 
+const folderPath = "images/gallery/"; // your folder
+const sliderTrack = document.getElementById("sliderTrack");
+
+// Load images
+for(let i=1;i<=totalImages;i++){
+  let img = document.createElement("img");
+  img.src = `${folderPath}${i}.jpg`;
+  sliderTrack.appendChild(img);
+}
+
+// Duplicate images for seamless sliding
+for(let i=1;i<=totalImages;i++){
+  let img = document.createElement("img");
+  img.src = `${folderPath}${i}.jpg`;
+  sliderTrack.appendChild(img);
+}
+   
+</script>
 <footer style="text-align:center;padding:20px;color:#bfc7d6;margin-top:40px;">Made with ❤️ by Jai</footer>
-
-
 
 </body>
 </html>
